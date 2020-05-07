@@ -60,7 +60,7 @@
             this.ThreeButton = new System.Windows.Forms.Button();
             this.TwoButton = new System.Windows.Forms.Button();
             this.ZeroButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.DisplayBox = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -489,21 +489,21 @@
             this.ZeroButton.UseVisualStyleBackColor = false;
             this.ZeroButton.Click += new System.EventHandler(this.ButtonHandler);
             // 
-            // textBox1
+            // DisplayBox
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.DisplayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.BackColor = System.Drawing.Color.Black;
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(72, 42);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(850, 61);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "0";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DisplayBox.BackColor = System.Drawing.Color.Black;
+            this.DisplayBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayBox.ForeColor = System.Drawing.Color.White;
+            this.DisplayBox.Location = new System.Drawing.Point(72, 42);
+            this.DisplayBox.Name = "DisplayBox";
+            this.DisplayBox.ReadOnly = true;
+            this.DisplayBox.Size = new System.Drawing.Size(850, 61);
+            this.DisplayBox.TabIndex = 1;
+            this.DisplayBox.Text = "0";
+            this.DisplayBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SciCalcForm
             // 
@@ -513,7 +513,7 @@
             this.BackColor = System.Drawing.SystemColors.InfoText;
             this.CancelButton = this.ClearButton;
             this.ClientSize = new System.Drawing.Size(974, 528);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.DisplayBox);
             this.Controls.Add(this.groupBox3);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -532,7 +532,7 @@
         #endregion
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button ZeroButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox DisplayBox;
         private System.Windows.Forms.Button SevenButton;
         private System.Windows.Forms.Button NineButton;
         private System.Windows.Forms.Button EightButton;

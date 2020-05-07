@@ -151,6 +151,7 @@ namespace SciCalc
             Queue<string> outputQueue = new Queue<string>();
             Stack<string> operatorStack = new Stack<string>();
             StringBuilder postFixString = new StringBuilder();
+
             string[] tokens = expression.Split(' ');
 
             foreach (string token in tokens)

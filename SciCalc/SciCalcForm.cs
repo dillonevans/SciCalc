@@ -9,6 +9,7 @@ namespace SciCalc
     {
         //Object & Variable Declarations
         private string displayString = "", infix;
+        private bool lastTokenIsOperator = false;
         private readonly Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
 
         /// <summary>
@@ -29,7 +30,11 @@ namespace SciCalc
             Button currentButton = (Button)sender;
             char token = currentButton.Text[0];
             string text = currentButton.Text;
-  
+            if (DisplayBox.Text == "ERROR")
+            {
+                displayString = "";
+                DisplayBox.Clear();
+            }
             if (!(displayString.Contains("+") || displayString.Contains("−") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
             {
                 if (Tokens.IsFunction(text)) //Encase whatever is on the display with the function
@@ -52,9 +57,22 @@ namespace SciCalc
                 infix += " " + text + " ";
             }
 
-            displayString += text;
-            textBox1.Text = displayString;
-            Debug.WriteLine(infix);
+            if (lastTokenIsOperator && Tokens.IsOperator(text))
+            {
+                displayString = "ERROR";
+                DisplayBox.Text = displayString;
+                infix = "";
+                EqualsButton.Enabled = false;
+            }
+            else
+            {
+                lastTokenIsOperator = Tokens.IsOperator(text) ? true : false;
+                displayString += text;
+                DisplayBox.Text = displayString;
+                EqualsButton.Enabled = true;
+                Debug.WriteLine(infix);
+            }
+
         }
 
         /// <summary>
@@ -65,7 +83,7 @@ namespace SciCalc
         private void ClearButton_Click(object sender, EventArgs e)
         {
             infix = ""; displayString = "";
-            textBox1.Text = displayString;
+            DisplayBox.Text = displayString;
         }
 
         /// <summary>
@@ -122,7 +140,7 @@ namespace SciCalc
         {
 
             string result = Calculator.EvaluateExpression(infix.Trim()).ToString();
-            textBox1.Text = result;
+            DisplayBox.Text = result;
             infix = result;
             displayString = result;
         }
