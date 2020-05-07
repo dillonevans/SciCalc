@@ -21,10 +21,11 @@ namespace SciCalc
         public static double EvaluateExpression(string expression)
         {
             expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
-            double l, r;
+            double l, r; //The left and right operands of an expresison
             Stack<double> valueStack = new Stack<double>();
             string[] tokens = expression.Trim().Split(' ');
 
+            //Read in each token of the given expression
             foreach (string token in tokens)
             {
                 if (token != " ") //Ignore Whitespaces
@@ -167,7 +168,6 @@ namespace SciCalc
                 //If the token is a operator push it onto the Operator Stack
                 else if (Tokens.IsOperator(token)) 
                 {
-
                     if (operatorStack.Count != 0)
                     {
                         //While there are still left associative operators, a function, or an operator of higher precedence
@@ -195,13 +195,8 @@ namespace SciCalc
                 {
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
-
                         outputQueue.Enqueue(operatorStack.Pop());
-
-                        if (operatorStack.Count == 0)
-                        {
-                            throw new Exception("Imbalanced Parenthetical");
-                        }
+                        if (operatorStack.Count == 0) { throw new Exception("Imbalanced Parenthetical");} 
                     }
                     operatorStack.Pop();
                 }
@@ -211,7 +206,6 @@ namespace SciCalc
             {
                 outputQueue.Enqueue(operatorStack.Pop());
             }
-
             //Append whatever is remaining in the output queue to the string
             foreach (string str in outputQueue)
             {
