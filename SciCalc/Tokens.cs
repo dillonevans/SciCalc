@@ -110,7 +110,7 @@ namespace SciCalc
             return true;
         }
 
-        /// <summary>
+        /// <summary> 
         /// Determines if the given token is a constant
         /// </summary>
         /// <param name="token"> The parsed token </param>
