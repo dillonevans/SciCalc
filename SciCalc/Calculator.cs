@@ -5,61 +5,46 @@ using System.Text;
 
 namespace SciCalc
 {
+  
     class Calculator
     {
-
         public static double EvaluateExpression(string expression)
         {
-            expression = ConvertToPostFix(CleanUpString(expression));
+            expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
+            double l, r;
             Stack<double> valueStack = new Stack<double>();
             string[] tokens = expression.Trim().Split(' ');
-            double l, r;
-            Debug.WriteLine(tokens.Length);
+
             foreach (string token in tokens)
             {
-                if (token != " ")
+                if (token != " ") //Ignore Whitespaces
                 {
-
-                    Debug.WriteLine("This is a token: " + token);
-                    if (IsNumeric(token))
+                    if (Tokens.IsNumeric(token))
                     {
-                        if (token == "π")
+                        valueStack.Push(Double.Parse(token));
+        
+                    }
+                    else if (Tokens.IsOperator(token))
+                    {
+                        if (token == Tokens.FACT_OP)
                         {
-                            valueStack.Push(Math.PI);
-                        }
-                        else if (token == "e")
-                        {
-                            Debug.WriteLine("E");
-                            valueStack.Push(Math.E);
+                            valueStack.Push(Factorial(valueStack.Pop()));
                         }
                         else
-                        {
-                            valueStack.Push(Double.Parse(token));
-                        }
-                    }
-                    else if (IsOperator(token))
-                    {
-                        if (token != "!")
                         {
                             l = valueStack.Pop();
                             r = valueStack.Pop();
                             valueStack.Push(EvaluateExpression(l, r, token));
                         }
-                        else
-                        {
-                            valueStack.Push(Factorial(valueStack.Pop()));
-                        }
                     }
-                    else if (IsFunction(token))
+                    //If the current token identifies a Function
+                    else if (Tokens.IsFunction(token))
                     {
                         valueStack.Push(EvaluateFunction(token, valueStack.Pop()));
                     }
                 }
             }
             return valueStack.Pop();
-
-            // Console.WriteLine("HERE");
-
         }
 
         /// <summary>
@@ -73,171 +58,183 @@ namespace SciCalc
         {
             switch (op)
             {
-                case "+":
+                case Tokens.ADD_OP:
                     return leftOperand + rightOperand;
-                case "-":
+                case Tokens.SUB_OP:
                     return leftOperand - rightOperand;
-                case "x":
+                case Tokens.MULT_OP:
                     return leftOperand * rightOperand;
-                case "/":
+                case Tokens.DIV_OP:
                     return leftOperand / rightOperand;
-                case "%":
+                case Tokens.MOD_OP:
                     return leftOperand % rightOperand;
-                case "^":
+                case Tokens.EXP_OP:
                     return Math.Pow(leftOperand, rightOperand);
             }
             return 0;
         }
 
         /// <summary>
-        /// Evaluates the function on the stack
+        /// Evaluates the function on the top of the stack
         /// </summary>
         /// <param name="func"> The function to evaluate </param>
         /// <param name="val"> The value to insert into the function </param>
         /// <returns> The result of the function evaluation </returns>
         private static double EvaluateFunction(string func, double val)
         {
+            //Perform Token Lookup and Return The Evaluation of the Associated Function for the given value
             switch (func)
             {
-                case "sin":
+                case Tokens.SIN:
                     return Math.Sin(val);
-                case "cos":
+                case Tokens.COS:
                     return Math.Cos(val);
-                case "tan":
+                case Tokens.TAN:
                     return Math.Tan(val);
-                case "sqrt":
+                case Tokens.SQRT:
                     return Math.Sqrt(val);
-                case "ln":
+                case Tokens.NATURAL_LOG:
                     return Math.Log(val);
+                case Tokens.LOG:
+                    return Math.Log10(val);
             }
             return 0;
         }
 
-        /**
-         * Utilizes Diijkstra's Shunting-Yard Algorithm to convert the expression given
-         * to Reverse-Polish Notation or Postfix form
-         * @param expression The user input expression in infix
-         * @return The given expression in RPN
-         */
+        /// <summary>
+        /// Evaluate the constant represented by the token
+        /// </summary>
+        /// <param name="constant"> The token representing the constant </param>
+        /// <returns> The value of the constant </returns>
+        private static double EvaluateConstant(string constant)
+        {
+            //Perform Token Lookup and Return Constant Value (If It is a Valid Token)
+            switch (constant)
+            {
+                case Tokens.PI:
+                    return Math.PI;
+                case Tokens.E:
+                    return Math.E;
+                default:
+                    return 0;
+            }  
+        }
+
+      /// <summary>
+      /// Utilizes Diijkstra's Shunting-Yard Algorithm to convert the expression given to
+      /// "Reverse-Polish Notation" or Postfix 
+      /// </summary>
+      /// <param name="expression"> The user input expression in infix</param>
+      /// <returns> The given expression in RPN </returns>
         private static string ConvertToPostFix(string expression)
         {
-            Queue<string> output = new Queue<string>();
+            Queue<string> outputQueue = new Queue<string>();
             Stack<string> operatorStack = new Stack<string>();
-            StringBuilder outString = new StringBuilder();
+            StringBuilder postFixString = new StringBuilder();
             string[] tokens = expression.Split(' ');
 
             foreach (string token in tokens)
             {
-                if (IsNumeric(token))
+                if (Tokens.IsConstant(token))
                 {
-                    if (token == "π")
-                    {
-                        output.Enqueue(Math.PI.ToString());
-                    }
-                    else if (token == "e")
-                    {
-                        output.Enqueue(Math.E.ToString());
-                    }
-                    else
-                    {
-                        output.Enqueue(token);
-
-                    }
+                    outputQueue.Enqueue(EvaluateConstant(token).ToString());
                 }
-                else if (IsFunction(token))
+
+                else if (Tokens.IsNumeric(token))
+                { 
+                    outputQueue.Enqueue(token);
+                }
+
+                else if (Tokens.IsFunction(token)) //If the token is a function push it onto the op stack
                 {
                     operatorStack.Push(token);
                 }
-                else if (IsOperator(token))
+
+                else if (Tokens.IsOperator(token)) //If the token is a operator push it onto the op stack
                 {
+
                     if (operatorStack.Count != 0)
                     {
-                        while (IsFunction(operatorStack.Peek()) || (OperatorPrecedence(token) < OperatorPrecedence(operatorStack.Peek()) || (OperatorPrecedence(token) == OperatorPrecedence(operatorStack.Peek()) && IsLeftAssociative(token)) && operatorStack.Peek() != ("(")))
+                        //While there are still left associative operators, a function, or an operator of higher precedence
+                        //Pop the top of the op stack and Enqueue it. If a left parenthesis is encountered, halt.
+                        while (Tokens.IsFunction(operatorStack.Peek()) || (OperatorPrecedence(token) < OperatorPrecedence(operatorStack.Peek()) || (OperatorPrecedence(token) == OperatorPrecedence(operatorStack.Peek()) && IsLeftAssociative(token)) && operatorStack.Peek() != (Tokens.LEFT_PAREN_OP)))
                         {
-                            output.Enqueue(operatorStack.Pop());
+                            outputQueue.Enqueue(operatorStack.Pop());
+
                             if (operatorStack.Count == 0)
                             {
                                 break;
                             }
                         }
                     }
-                    operatorStack.Push(token);
+                    operatorStack.Push(token); //Push the current token to the op stack
                 }
-                else if (token == "(")
+
+                else if (token == Tokens.LEFT_PAREN_OP) //If the token is a left parenthesis, push it to the op stack
                 {
                     operatorStack.Push(token);
                 }
-                else if (token == (")"))
+
+                else if (token == Tokens.RIGHT_PAREN_OP) //If the token is a right parenthesis, pop the stack until a left parenthesis is found
                 {
-                    while (operatorStack.Peek() != ("("))
+                    while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
-                        output.Enqueue(operatorStack.Pop());
+                        outputQueue.Enqueue(operatorStack.Pop());
+                        if (operatorStack.Count == 0)
+                        {
+                            throw new Exception("Imbalanced Parenthetical");
+                        }
                     }
                     operatorStack.Pop();
                 }
             }
+
             while (operatorStack.Count != 0)
             {
-                output.Enqueue(operatorStack.Pop());
-            }
-            foreach (string str in output)
-            {
-                outString.Append(str + " ");
+                outputQueue.Enqueue(operatorStack.Pop());
             }
 
-            return outString.ToString();
-        }
-
-        private static bool IsNumeric(string token)
-        {
-            foreach (char parse in token)
+            //Append whatever is remaining in the output queue to the string
+            foreach (string str in outputQueue)
             {
-                if (Char.IsWhiteSpace(parse))
-                {
-                    return false;
-                }
-                if (!Char.IsDigit(parse) && !(parse == '.' || parse == 'π' || parse == 'e'))
-                {
-                    return false;
-                }
+                postFixString.Append(str + " ");
             }
-            return true;
+            Debug.WriteLine("Post Fix: {0}", postFixString);
+            return postFixString.ToString();
         }
-        private static bool IsFunction(string token)
-        {
-            switch (token)
-            {
-                case "sin":
-                case "cos":
-                case "tan":
-                case "sqrt":
-                case "ln":
-                    return true;
-                default:
-                    return false;
-            }
-        }
+       
+        /// <summary>
+        /// Determines the precedence of the operator for order of evaluation
+        /// </summary>
+        /// <param name="op"> The operator </param>
+        /// <returns> The precedence of the operator </returns>
         private static int OperatorPrecedence(string op)
         {
+            //Perform Token Lookup and Return Precedence
             switch (op)
             {
-                case "^": //Expontiation
+                case Tokens.EXP_OP: 
                     return 4;
-                case "!":
+                case Tokens.FACT_OP:
                     return 3;
-                case "x":
-                case "/":
-                case "%":
+                case Tokens.MULT_OP:
+                case Tokens.DIV_OP:
+                case Tokens.MOD_OP:
                     return 2;
-                case "+":
-                case "-":
+                case Tokens.ADD_OP:
+                case Tokens.SUB_OP:
                     return 1;
                 default:
                     return 0;
             }
         }
 
-        public static string CleanUpString(string expr)
+        /// <summary>
+        /// Removes any additional whitespace from the infix string for conversion to post fix
+        /// </summary>
+        /// <param name="expr"> The infix expression </param>
+        /// <returns></returns>
+        private static string CleanUpString(string expr)
         {
             StringBuilder editedString = new StringBuilder();
 
@@ -256,48 +253,37 @@ namespace SciCalc
             {
                 editedString.Append(expr[expr.Length - 1]);
             }
+            Debug.WriteLine(editedString.ToString());
             return editedString.ToString();
         }
 
+        /// <summary>
+        /// Determines if the operator is left associative
+        /// </summary>
+        /// <param name="op"> The operator </param>
+        /// <returns> True if the operator is lest associative </returns>
         private static bool IsLeftAssociative(string op)
         {
             switch (op)
             {
-                case "+":
-                case "-":
-                case "x":
-                case "/":
-                case "%":
-                case "!":
+                case Tokens.ADD_OP:
+                case Tokens.SUB_OP:
+                case Tokens.MULT_OP:
+                case Tokens.DIV_OP:
+                case Tokens.MOD_OP:
+                case Tokens.FACT_OP:
                     return true;
-                case "^":
+                case Tokens.EXP_OP:
                 default:
                     return false;
             }
         }
-
-        private static bool IsOperator(String token)
-        {
-            switch (token)
-            {
-                case "+":
-                case "-":
-                case "x":
-                case "/":
-                case "^":
-                case "%":
-                case "!":
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
+    
         /// <summary>
         /// Calculates n!
         /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
+        /// <param name="n"> The value to find n! for </param>
+        /// <returns> n! </returns>
         private static double Factorial(double n)
         {
             if (n == 0)

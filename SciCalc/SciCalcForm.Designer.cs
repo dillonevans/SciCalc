@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SciCalcForm));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.LogButton = new System.Windows.Forms.Button();
             this.ExponentButton = new System.Windows.Forms.Button();
             this.FactorialButton = new System.Windows.Forms.Button();
             this.SqrtButton = new System.Windows.Forms.Button();
@@ -66,6 +67,7 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.LogButton);
             this.groupBox3.Controls.Add(this.ExponentButton);
             this.groupBox3.Controls.Add(this.FactorialButton);
             this.groupBox3.Controls.Add(this.SqrtButton);
@@ -96,21 +98,33 @@
             this.groupBox3.Controls.Add(this.TwoButton);
             this.groupBox3.Controls.Add(this.ZeroButton);
             this.groupBox3.ForeColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Location = new System.Drawing.Point(58, 146);
+            this.groupBox3.Location = new System.Drawing.Point(12, 146);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(860, 370);
+            this.groupBox3.Size = new System.Drawing.Size(950, 370);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
+            // 
+            // LogButton
+            // 
+            this.LogButton.BackColor = System.Drawing.Color.Transparent;
+            this.LogButton.ForeColor = System.Drawing.Color.Black;
+            this.LogButton.Location = new System.Drawing.Point(105, 90);
+            this.LogButton.Name = "LogButton";
+            this.LogButton.Size = new System.Drawing.Size(93, 63);
+            this.LogButton.TabIndex = 29;
+            this.LogButton.Text = "log";
+            this.LogButton.UseVisualStyleBackColor = false;
+            this.LogButton.Click += new System.EventHandler(this.ButtonHandler);
             // 
             // ExponentButton
             // 
             this.ExponentButton.BackColor = System.Drawing.Color.Transparent;
             this.ExponentButton.ForeColor = System.Drawing.Color.Black;
-            this.ExponentButton.Location = new System.Drawing.Point(143, 21);
+            this.ExponentButton.Location = new System.Drawing.Point(105, 21);
             this.ExponentButton.Name = "ExponentButton";
             this.ExponentButton.Size = new System.Drawing.Size(93, 63);
             this.ExponentButton.TabIndex = 28;
-            this.ExponentButton.Text = "x^n";
+            this.ExponentButton.Text = "^";
             this.ExponentButton.UseVisualStyleBackColor = false;
             this.ExponentButton.Click += new System.EventHandler(this.ButtonHandler);
             // 
@@ -119,7 +133,7 @@
             this.FactorialButton.BackColor = System.Drawing.Color.Transparent;
             this.FactorialButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FactorialButton.ForeColor = System.Drawing.Color.Black;
-            this.FactorialButton.Location = new System.Drawing.Point(650, 90);
+            this.FactorialButton.Location = new System.Drawing.Point(752, 90);
             this.FactorialButton.Name = "FactorialButton";
             this.FactorialButton.Size = new System.Drawing.Size(93, 63);
             this.FactorialButton.TabIndex = 27;
@@ -131,7 +145,7 @@
             // 
             this.SqrtButton.BackColor = System.Drawing.Color.Transparent;
             this.SqrtButton.ForeColor = System.Drawing.Color.Black;
-            this.SqrtButton.Location = new System.Drawing.Point(44, 21);
+            this.SqrtButton.Location = new System.Drawing.Point(6, 21);
             this.SqrtButton.Name = "SqrtButton";
             this.SqrtButton.Size = new System.Drawing.Size(93, 63);
             this.SqrtButton.TabIndex = 26;
@@ -144,7 +158,7 @@
             this.ModuloButton.BackColor = System.Drawing.Color.Transparent;
             this.ModuloButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ModuloButton.ForeColor = System.Drawing.Color.Black;
-            this.ModuloButton.Location = new System.Drawing.Point(650, 21);
+            this.ModuloButton.Location = new System.Drawing.Point(752, 21);
             this.ModuloButton.Name = "ModuloButton";
             this.ModuloButton.Size = new System.Drawing.Size(93, 63);
             this.ModuloButton.TabIndex = 25;
@@ -156,7 +170,7 @@
             // 
             this.TanButton.BackColor = System.Drawing.Color.Transparent;
             this.TanButton.ForeColor = System.Drawing.Color.Black;
-            this.TanButton.Location = new System.Drawing.Point(44, 228);
+            this.TanButton.Location = new System.Drawing.Point(6, 228);
             this.TanButton.Name = "TanButton";
             this.TanButton.Size = new System.Drawing.Size(93, 63);
             this.TanButton.TabIndex = 24;
@@ -168,7 +182,7 @@
             // 
             this.SinButton.BackColor = System.Drawing.Color.Transparent;
             this.SinButton.ForeColor = System.Drawing.Color.Black;
-            this.SinButton.Location = new System.Drawing.Point(44, 90);
+            this.SinButton.Location = new System.Drawing.Point(6, 90);
             this.SinButton.Name = "SinButton";
             this.SinButton.Size = new System.Drawing.Size(93, 63);
             this.SinButton.TabIndex = 23;
@@ -180,7 +194,7 @@
             // 
             this.CosButton.BackColor = System.Drawing.Color.Transparent;
             this.CosButton.ForeColor = System.Drawing.Color.Black;
-            this.CosButton.Location = new System.Drawing.Point(44, 159);
+            this.CosButton.Location = new System.Drawing.Point(6, 159);
             this.CosButton.Name = "CosButton";
             this.CosButton.Size = new System.Drawing.Size(93, 63);
             this.CosButton.TabIndex = 22;
@@ -192,7 +206,7 @@
             // 
             this.naturalLogButton.BackColor = System.Drawing.Color.Transparent;
             this.naturalLogButton.ForeColor = System.Drawing.Color.Black;
-            this.naturalLogButton.Location = new System.Drawing.Point(44, 297);
+            this.naturalLogButton.Location = new System.Drawing.Point(6, 297);
             this.naturalLogButton.Name = "naturalLogButton";
             this.naturalLogButton.Size = new System.Drawing.Size(93, 63);
             this.naturalLogButton.TabIndex = 21;
@@ -205,7 +219,7 @@
             this.eButton.BackColor = System.Drawing.Color.Black;
             this.eButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eButton.ForeColor = System.Drawing.Color.Transparent;
-            this.eButton.Location = new System.Drawing.Point(575, 228);
+            this.eButton.Location = new System.Drawing.Point(632, 228);
             this.eButton.Name = "eButton";
             this.eButton.Size = new System.Drawing.Size(93, 63);
             this.eButton.TabIndex = 20;
@@ -218,7 +232,7 @@
             this.PiButton.BackColor = System.Drawing.Color.Black;
             this.PiButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PiButton.ForeColor = System.Drawing.Color.Transparent;
-            this.PiButton.Location = new System.Drawing.Point(179, 228);
+            this.PiButton.Location = new System.Drawing.Point(236, 228);
             this.PiButton.Name = "PiButton";
             this.PiButton.Size = new System.Drawing.Size(93, 63);
             this.PiButton.TabIndex = 19;
@@ -231,7 +245,7 @@
             this.RightParenButton.BackColor = System.Drawing.Color.Black;
             this.RightParenButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RightParenButton.ForeColor = System.Drawing.Color.Transparent;
-            this.RightParenButton.Location = new System.Drawing.Point(575, 297);
+            this.RightParenButton.Location = new System.Drawing.Point(632, 297);
             this.RightParenButton.Name = "RightParenButton";
             this.RightParenButton.Size = new System.Drawing.Size(93, 63);
             this.RightParenButton.TabIndex = 18;
@@ -244,7 +258,7 @@
             this.LeftParenButton.BackColor = System.Drawing.Color.Black;
             this.LeftParenButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LeftParenButton.ForeColor = System.Drawing.Color.Transparent;
-            this.LeftParenButton.Location = new System.Drawing.Point(179, 297);
+            this.LeftParenButton.Location = new System.Drawing.Point(236, 297);
             this.LeftParenButton.Name = "LeftParenButton";
             this.LeftParenButton.Size = new System.Drawing.Size(93, 63);
             this.LeftParenButton.TabIndex = 17;
@@ -257,7 +271,7 @@
             this.DecimalButton.BackColor = System.Drawing.Color.Black;
             this.DecimalButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DecimalButton.ForeColor = System.Drawing.Color.Transparent;
-            this.DecimalButton.Location = new System.Drawing.Point(278, 297);
+            this.DecimalButton.Location = new System.Drawing.Point(335, 297);
             this.DecimalButton.Name = "DecimalButton";
             this.DecimalButton.Size = new System.Drawing.Size(93, 63);
             this.DecimalButton.TabIndex = 16;
@@ -271,7 +285,7 @@
             this.ClearButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ClearButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ClearButton.Location = new System.Drawing.Point(476, 297);
+            this.ClearButton.Location = new System.Drawing.Point(533, 297);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(93, 63);
             this.ClearButton.TabIndex = 15;
@@ -284,7 +298,7 @@
             this.DivisionButton.BackColor = System.Drawing.Color.Transparent;
             this.DivisionButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DivisionButton.ForeColor = System.Drawing.Color.Black;
-            this.DivisionButton.Location = new System.Drawing.Point(749, 21);
+            this.DivisionButton.Location = new System.Drawing.Point(851, 21);
             this.DivisionButton.Name = "DivisionButton";
             this.DivisionButton.Size = new System.Drawing.Size(93, 63);
             this.DivisionButton.TabIndex = 14;
@@ -297,7 +311,7 @@
             this.MultiplicationButton.BackColor = System.Drawing.Color.Transparent;
             this.MultiplicationButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MultiplicationButton.ForeColor = System.Drawing.Color.Black;
-            this.MultiplicationButton.Location = new System.Drawing.Point(749, 90);
+            this.MultiplicationButton.Location = new System.Drawing.Point(851, 90);
             this.MultiplicationButton.Name = "MultiplicationButton";
             this.MultiplicationButton.Size = new System.Drawing.Size(93, 63);
             this.MultiplicationButton.TabIndex = 13;
@@ -311,11 +325,11 @@
             this.SubtractionButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SubtractionButton.ForeColor = System.Drawing.Color.Black;
             this.SubtractionButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.SubtractionButton.Location = new System.Drawing.Point(749, 159);
+            this.SubtractionButton.Location = new System.Drawing.Point(851, 159);
             this.SubtractionButton.Name = "SubtractionButton";
             this.SubtractionButton.Size = new System.Drawing.Size(93, 63);
             this.SubtractionButton.TabIndex = 12;
-            this.SubtractionButton.Text = "-";
+            this.SubtractionButton.Text = "−";
             this.SubtractionButton.UseVisualStyleBackColor = false;
             this.SubtractionButton.Click += new System.EventHandler(this.ButtonHandler);
             // 
@@ -324,7 +338,7 @@
             this.AdditionButton.BackColor = System.Drawing.Color.Transparent;
             this.AdditionButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdditionButton.ForeColor = System.Drawing.Color.Black;
-            this.AdditionButton.Location = new System.Drawing.Point(749, 228);
+            this.AdditionButton.Location = new System.Drawing.Point(851, 228);
             this.AdditionButton.Name = "AdditionButton";
             this.AdditionButton.Size = new System.Drawing.Size(93, 63);
             this.AdditionButton.TabIndex = 11;
@@ -337,9 +351,9 @@
             this.EqualsButton.BackColor = System.Drawing.Color.OrangeRed;
             this.EqualsButton.Font = new System.Drawing.Font("Copperplate Gothic Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EqualsButton.ForeColor = System.Drawing.Color.Black;
-            this.EqualsButton.Location = new System.Drawing.Point(674, 297);
+            this.EqualsButton.Location = new System.Drawing.Point(851, 297);
             this.EqualsButton.Name = "EqualsButton";
-            this.EqualsButton.Size = new System.Drawing.Size(168, 63);
+            this.EqualsButton.Size = new System.Drawing.Size(93, 63);
             this.EqualsButton.TabIndex = 10;
             this.EqualsButton.Text = "=";
             this.EqualsButton.UseVisualStyleBackColor = false;
@@ -350,7 +364,7 @@
             this.SevenButton.BackColor = System.Drawing.Color.Black;
             this.SevenButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SevenButton.ForeColor = System.Drawing.Color.Transparent;
-            this.SevenButton.Location = new System.Drawing.Point(278, 90);
+            this.SevenButton.Location = new System.Drawing.Point(335, 90);
             this.SevenButton.Name = "SevenButton";
             this.SevenButton.Size = new System.Drawing.Size(93, 63);
             this.SevenButton.TabIndex = 7;
@@ -363,7 +377,7 @@
             this.NineButton.BackColor = System.Drawing.Color.Black;
             this.NineButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NineButton.ForeColor = System.Drawing.Color.White;
-            this.NineButton.Location = new System.Drawing.Point(476, 90);
+            this.NineButton.Location = new System.Drawing.Point(533, 90);
             this.NineButton.Name = "NineButton";
             this.NineButton.Size = new System.Drawing.Size(93, 63);
             this.NineButton.TabIndex = 9;
@@ -376,7 +390,7 @@
             this.EightButton.BackColor = System.Drawing.Color.Black;
             this.EightButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EightButton.ForeColor = System.Drawing.Color.Transparent;
-            this.EightButton.Location = new System.Drawing.Point(377, 90);
+            this.EightButton.Location = new System.Drawing.Point(434, 90);
             this.EightButton.Name = "EightButton";
             this.EightButton.Size = new System.Drawing.Size(93, 63);
             this.EightButton.TabIndex = 8;
@@ -389,7 +403,7 @@
             this.FourButton.BackColor = System.Drawing.Color.Black;
             this.FourButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FourButton.ForeColor = System.Drawing.Color.Transparent;
-            this.FourButton.Location = new System.Drawing.Point(278, 159);
+            this.FourButton.Location = new System.Drawing.Point(335, 159);
             this.FourButton.Name = "FourButton";
             this.FourButton.Size = new System.Drawing.Size(93, 63);
             this.FourButton.TabIndex = 4;
@@ -402,7 +416,7 @@
             this.SixButton.BackColor = System.Drawing.Color.Black;
             this.SixButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SixButton.ForeColor = System.Drawing.Color.Transparent;
-            this.SixButton.Location = new System.Drawing.Point(476, 159);
+            this.SixButton.Location = new System.Drawing.Point(533, 159);
             this.SixButton.Name = "SixButton";
             this.SixButton.Size = new System.Drawing.Size(93, 63);
             this.SixButton.TabIndex = 6;
@@ -415,7 +429,7 @@
             this.FiveButton.BackColor = System.Drawing.Color.Black;
             this.FiveButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiveButton.ForeColor = System.Drawing.Color.Transparent;
-            this.FiveButton.Location = new System.Drawing.Point(377, 159);
+            this.FiveButton.Location = new System.Drawing.Point(434, 159);
             this.FiveButton.Name = "FiveButton";
             this.FiveButton.Size = new System.Drawing.Size(93, 63);
             this.FiveButton.TabIndex = 5;
@@ -428,7 +442,7 @@
             this.OneButton.BackColor = System.Drawing.Color.Black;
             this.OneButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OneButton.ForeColor = System.Drawing.Color.Transparent;
-            this.OneButton.Location = new System.Drawing.Point(278, 228);
+            this.OneButton.Location = new System.Drawing.Point(335, 228);
             this.OneButton.Name = "OneButton";
             this.OneButton.Size = new System.Drawing.Size(93, 63);
             this.OneButton.TabIndex = 1;
@@ -441,7 +455,7 @@
             this.ThreeButton.BackColor = System.Drawing.Color.Black;
             this.ThreeButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ThreeButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ThreeButton.Location = new System.Drawing.Point(476, 228);
+            this.ThreeButton.Location = new System.Drawing.Point(533, 228);
             this.ThreeButton.Name = "ThreeButton";
             this.ThreeButton.Size = new System.Drawing.Size(93, 63);
             this.ThreeButton.TabIndex = 3;
@@ -454,7 +468,7 @@
             this.TwoButton.BackColor = System.Drawing.Color.Black;
             this.TwoButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TwoButton.ForeColor = System.Drawing.Color.Transparent;
-            this.TwoButton.Location = new System.Drawing.Point(377, 228);
+            this.TwoButton.Location = new System.Drawing.Point(434, 228);
             this.TwoButton.Name = "TwoButton";
             this.TwoButton.Size = new System.Drawing.Size(93, 63);
             this.TwoButton.TabIndex = 2;
@@ -467,7 +481,7 @@
             this.ZeroButton.BackColor = System.Drawing.Color.Black;
             this.ZeroButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ZeroButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ZeroButton.Location = new System.Drawing.Point(377, 297);
+            this.ZeroButton.Location = new System.Drawing.Point(434, 297);
             this.ZeroButton.Name = "ZeroButton";
             this.ZeroButton.Size = new System.Drawing.Size(93, 63);
             this.ZeroButton.TabIndex = 0;
@@ -483,29 +497,29 @@
             this.textBox1.BackColor = System.Drawing.Color.Black;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(84, 37);
-            this.textBox1.Multiline = true;
+            this.textBox1.Location = new System.Drawing.Point(72, 42);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(816, 63);
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(850, 61);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "0";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Form1
+            // SciCalcForm
             // 
             this.AcceptButton = this.EqualsButton;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.InfoText;
             this.CancelButton = this.ClearButton;
-            this.ClientSize = new System.Drawing.Size(971, 528);
+            this.ClientSize = new System.Drawing.Size(974, 528);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.groupBox3);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "Form1";
+            this.MaximizeBox = false;
+            this.Name = "SciCalcForm";
             this.Text = "SciCalc";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
@@ -566,6 +580,7 @@
         private System.Windows.Forms.Button SqrtButton;
         private System.Windows.Forms.Button FactorialButton;
         private System.Windows.Forms.Button ExponentButton;
+        private System.Windows.Forms.Button LogButton;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -7,7 +8,7 @@ namespace SciCalc
     public partial class SciCalcForm : Form
     {
         private string displayString = "", infix;
-
+        private static Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
 
         public SciCalcForm()
         {
@@ -21,21 +22,26 @@ namespace SciCalc
             char token = currentButton.Text[0];
             string text = currentButton.Text;
 
-            if (text == "x^n") { text = "^"; }
+            if (text == "x^n") { text = Tokens.EXP_OP; }
 
-            if (!(displayString.Contains("+") || displayString.Contains("-") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
+          
+            if (!(displayString.Contains("+") || displayString.Contains("−") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
             {
-                if (text == "ln" || text == "cos" || text == "sin" || text == "tan" || text == "sqrt")
+                if (Tokens.IsFunction(text))
                 {
                     displayString = text + " (" + displayString + ")";
                     infix = text + " ( " + infix + " ) ";
                     text = "";
                 }
             }
+
             if (Char.IsDigit(token) || token == '.' || token == 'π' || token == 'e')
             {
-                infix += token;
-                Debug.WriteLine(infix);
+                infix += token; //Append number as usual
+            }
+            else if (text == Tokens.NEGATIVE_TOKEN)
+            {
+                infix += " " + text;
             }
             else
             {
@@ -44,6 +50,7 @@ namespace SciCalc
 
             displayString += text;
             textBox1.Text = displayString;
+            Debug.WriteLine(infix);
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -52,89 +59,47 @@ namespace SciCalc
             textBox1.Text = displayString;
         }
 
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
 
             Debug.WriteLine(e.KeyChar);
+
             //Lookup the key and activate the associated button
-            switch (e.KeyChar)
+            
+            if (buttonMap.ContainsKey(e.KeyChar.ToString()))
             {
-                case '0':
-                    ZeroButton.PerformClick();
-                    break;
-                case '1':
-                    OneButton.PerformClick();
-                    break;
-                case '2':
-                    TwoButton.PerformClick();
-                    break;
-                case '3':
-                    ThreeButton.PerformClick();
-                    break;
-                case '4':
-                    FourButton.PerformClick();
-                    break;
-                case '5':
-                    FiveButton.PerformClick();
-                    break;
-                case '6':
-                    SixButton.PerformClick();
-                    break;
-                case '7':
-                    SevenButton.PerformClick();
-                    break;
-                case '8':
-                    EightButton.PerformClick();
-                    break;
-                case '9':
-                    NineButton.PerformClick();
-                    break;
-                case '+':
-                    AdditionButton.PerformClick();
-                    break;
-                case '-':
-                    SubtractionButton.PerformClick();
-                    break;
-                case '*':
-                case 'x':
-                    MultiplicationButton.PerformClick();
-                    break;
-                case '/':
-                    DivisionButton.PerformClick();
-                    break;
-                case 'e':
-                    eButton.PerformClick();
-                    break;
-                case '!':
-                    FactorialButton.PerformClick();
-                    break;
-                case '(':
-                    LeftParenButton.PerformClick();
-                    break;
-                case ')':
-                    RightParenButton.PerformClick();
-                    break;
-                case '^':
-                    ExponentButton.PerformClick();
-                    break;
+                buttonMap[e.KeyChar.ToString()].PerformClick();
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string token;
             this.ActiveControl = EqualsButton;
+
+            foreach (Button b in groupBox3.Controls)
+            {
+                switch (b.Text)
+                {
+                    case Tokens.SUB_OP:
+                        token = "-";
+                        break;
+                    case Tokens.MULT_OP:
+                        token = "*";
+                        break;
+                    default:
+                        token = b.Text;
+                        break;
+                }
+                buttonMap.Add(token, b);
+            }
         }
 
         private void EqualsButton_Click(object sender, EventArgs e)
         {
 
             string result = Calculator.EvaluateExpression(infix.Trim()).ToString();
+          
             textBox1.Text = result;
             infix = result;
             displayString = result;
