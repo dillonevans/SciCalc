@@ -92,10 +92,6 @@ namespace SciCalc
           
             foreach (char parse in token)
             {
-                if (Char.IsWhiteSpace(parse))
-                {
-                    return false;
-                }
                 if (!Char.IsDigit(parse) && !(parse== DECIMAL_OP[0] || parse == NEGATIVE_TOKEN[0])) //Token is Negative or a Decimal
                 {
                     return false;
