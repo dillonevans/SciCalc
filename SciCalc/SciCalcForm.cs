@@ -35,6 +35,7 @@ namespace SciCalc
                 displayString = "";
                 DisplayBox.Clear();
             }
+
             if (!(displayString.Contains("+") || displayString.Contains("−") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
             {
                 if (Tokens.IsFunction(text)) //Encase whatever is on the display with the function

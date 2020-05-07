@@ -21,7 +21,7 @@ namespace SciCalc
         public static double EvaluateExpression(string expression)
         {
             expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
-            double l, r; //The left and right operands of an expresison
+            double l, r; //The left and right operands of an expression
             Stack<double> valueStack = new Stack<double>();
             string[] tokens = expression.Trim().Split(' ');
 
