@@ -290,7 +290,6 @@ namespace SciCalc
                 case Tokens.MOD_OP:
                 case Tokens.FACT_OP:
                     return true;
-                case Tokens.EXP_OP:
                 default:
                     return false;
             }
