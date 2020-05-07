@@ -7,10 +7,17 @@ namespace SciCalc
 {
     /// <summary>
     /// <b> Author: Dillon Evans </b>
-    /// <br> This Class is Used to Perform Calculations using Diijkstra's Shunting Yard Algorithm </br>
+    /// <br> This Class is Used to Perform Calculations using Diijkstra's Shunting Yard Algorithm. </br>
+    /// <br> Parses input tokens based on the constants defined within the <see cref="Tokens"/> class. </br>
     /// </summary>
     class Calculator
     {
+        /// <summary>
+        /// Converts the given expression into Reverse-Polish Notation and Applies the Appropriate Operators or Functions
+        /// to the current token
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static double EvaluateExpression(string expression)
         {
             expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
@@ -31,10 +38,12 @@ namespace SciCalc
                     {
                         if (token == Tokens.FACT_OP)
                         {
+                            //Calculates the Value of the Factorial of the Top of The Stack and Stores the Value
                             valueStack.Push(Factorial(valueStack.Pop()));
                         }
                         else
                         {
+                            //Pop the Stack Twice to Obtain the Operands and Apply the Operator
                             l = valueStack.Pop();
                             r = valueStack.Pop();
                             valueStack.Push(EvaluateExpression(l, r, token));
@@ -43,6 +52,7 @@ namespace SciCalc
                     //If the current token identifies a Function
                     else if (Tokens.IsFunction(token))
                     {
+                        //Apply the function to the value on the top of the stack and store the result.
                         valueStack.Push(EvaluateFunction(token, valueStack.Pop()));
                     }
                 }

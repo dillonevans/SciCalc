@@ -7,14 +7,23 @@ namespace SciCalc
 {
     public partial class SciCalcForm : Form
     {
+        //Object & Variable Declarations
         private string displayString = "", infix;
         private static Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
 
+        /// <summary>
+        /// Constructor for SciCalcForm
+        /// </summary>
         public SciCalcForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Universal Button Handler. Handles Input for Every Button Aside from Clear and Equals
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonHandler(object sender, EventArgs e)
         {
             Button currentButton = (Button)sender;
@@ -23,7 +32,7 @@ namespace SciCalc
   
             if (!(displayString.Contains("+") || displayString.Contains("−") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
             {
-                if (Tokens.IsFunction(text))
+                if (Tokens.IsFunction(text)) //Encase whatever is on the display with the function
                 {
                     displayString = text + " (" + displayString + ")";
                     infix = text + " ( " + infix + " ) ";
@@ -48,24 +57,37 @@ namespace SciCalc
             Debug.WriteLine(infix);
         }
 
+        /// <summary>
+        /// Clears the Display and Resets the Infix String
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, EventArgs e)
         {
             infix = ""; displayString = "";
             textBox1.Text = displayString;
         }
 
+        /// <summary>
+        /// Upon Key Press, Perform the Associated Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
-            Debug.WriteLine(e.KeyChar);
-
             //Lookup the key and perform the button click
             if (buttonMap.ContainsKey(e.KeyChar.ToString()))
             {
                 buttonMap[e.KeyChar.ToString()].PerformClick();
             }
         }
-
+    
+        /// <summary>
+        /// Upon Loading the Form, Import All The Buttons to a Dictionary
+        /// that Serves as a Lookup Table for User Input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             string token;
@@ -73,6 +95,7 @@ namespace SciCalc
 
             foreach (Button b in groupBox3.Controls)
             {
+                //The '*' key represents multiplication and the '-' key represents subtraction 
                 switch (b.Text)
                 {
                     case Tokens.SUB_OP:
@@ -90,7 +113,8 @@ namespace SciCalc
         }
 
         /// <summary>
-        /// Upon Applying The Equals Button, Evaluate The Infix Expression
+        /// Upon Clicking The Equals Button, Evaluate The Infix Expression and display the
+        /// result to the user
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
