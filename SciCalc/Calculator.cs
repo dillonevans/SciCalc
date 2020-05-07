@@ -29,11 +29,13 @@ namespace SciCalc
             {
                 if (token != " ") //Ignore Whitespaces
                 {
+                    //If the Current Token is a Number
                     if (Tokens.IsNumeric(token))
                     {
+                        //Push the Token Onto the Value Stack
                         valueStack.Push(Double.Parse(token));
-        
                     }
+                    //If the Current Token is an Operator
                     else if (Tokens.IsOperator(token))
                     {
                         if (token == Tokens.FACT_OP)
@@ -180,14 +182,15 @@ namespace SciCalc
                             }
                         }
                     }
-                    operatorStack.Push(token); //Push the current token to the op stack
+                    //Push the current token to the Operator Stack
+                    operatorStack.Push(token); 
                 }
-                //If the token is a left parenthesis, push it to the op stack
+                //If the token is a left parentheses, push it onto the Operator Stack
                 else if (token == Tokens.LEFT_PAREN_OP) 
                 {
                     operatorStack.Push(token);
                 }
-                //If the token is a right parenthesis, pop the stack until a left parenthesis is found
+                //If the Token is a right parenthesis, pop the stack until a left parenthesis is found
                 else if (token == Tokens.RIGHT_PAREN_OP) 
                 {
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
