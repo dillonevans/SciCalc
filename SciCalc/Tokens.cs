@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace SciCalc
 {
     /// <summary>
-    /// A class containing valid tokens within the grammar
+    /// <b> Author: Dillon Evans </b>
+    /// <br> A class containing valid tokens within the grammar </br>
     /// </summary>
     class Tokens
     {
-
         //Valid Operator Tokens
         public const string ADD_OP = "+";
         public const string DIV_OP = "/";
@@ -127,5 +127,4 @@ namespace SciCalc
             }
         }
     }
-
 }

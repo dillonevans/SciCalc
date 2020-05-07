@@ -15,16 +15,12 @@ namespace SciCalc
             InitializeComponent();
         }
 
-
         private void ButtonHandler(object sender, EventArgs e)
         {
             Button currentButton = (Button)sender;
             char token = currentButton.Text[0];
             string text = currentButton.Text;
-
-            if (text == "x^n") { text = Tokens.EXP_OP; }
-
-          
+  
             if (!(displayString.Contains("+") || displayString.Contains("−") || displayString.Contains("/") || displayString.Contains("x")) && displayString.Length >= 1)
             {
                 if (Tokens.IsFunction(text))
@@ -34,7 +30,6 @@ namespace SciCalc
                     text = "";
                 }
             }
-
             if (Char.IsDigit(token) || token == '.' || token == 'π' || token == 'e')
             {
                 infix += token; //Append number as usual
@@ -64,8 +59,7 @@ namespace SciCalc
 
             Debug.WriteLine(e.KeyChar);
 
-            //Lookup the key and activate the associated button
-            
+            //Lookup the key and perform the button click
             if (buttonMap.ContainsKey(e.KeyChar.ToString()))
             {
                 buttonMap[e.KeyChar.ToString()].PerformClick();
@@ -95,11 +89,15 @@ namespace SciCalc
             }
         }
 
+        /// <summary>
+        /// Upon Applying The Equals Button, Evaluate The Infix Expression
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EqualsButton_Click(object sender, EventArgs e)
         {
 
             string result = Calculator.EvaluateExpression(infix.Trim()).ToString();
-          
             textBox1.Text = result;
             infix = result;
             displayString = result;

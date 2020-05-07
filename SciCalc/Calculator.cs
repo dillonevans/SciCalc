@@ -5,7 +5,10 @@ using System.Text;
 
 namespace SciCalc
 {
-  
+    /// <summary>
+    /// <b> Author: Dillon Evans </b>
+    /// <br> This Class is Used to Perform Calculations using Diijkstra's Shunting Yard Algorithm </br>
+    /// </summary>
     class Calculator
     {
         public static double EvaluateExpression(string expression)
@@ -139,18 +142,18 @@ namespace SciCalc
                 {
                     outputQueue.Enqueue(EvaluateConstant(token).ToString());
                 }
-
+                //If the token is a number, enqueue it to the Output Queue
                 else if (Tokens.IsNumeric(token))
                 { 
                     outputQueue.Enqueue(token);
                 }
-
-                else if (Tokens.IsFunction(token)) //If the token is a function push it onto the op stack
+                // If the token is a function push it onto the Operator Stack
+                else if (Tokens.IsFunction(token)) 
                 {
                     operatorStack.Push(token);
                 }
-
-                else if (Tokens.IsOperator(token)) //If the token is a operator push it onto the op stack
+                //If the token is a operator push it onto the Operator Stack
+                else if (Tokens.IsOperator(token)) 
                 {
 
                     if (operatorStack.Count != 0)
@@ -169,13 +172,13 @@ namespace SciCalc
                     }
                     operatorStack.Push(token); //Push the current token to the op stack
                 }
-
-                else if (token == Tokens.LEFT_PAREN_OP) //If the token is a left parenthesis, push it to the op stack
+                //If the token is a left parenthesis, push it to the op stack
+                else if (token == Tokens.LEFT_PAREN_OP) 
                 {
                     operatorStack.Push(token);
                 }
-
-                else if (token == Tokens.RIGHT_PAREN_OP) //If the token is a right parenthesis, pop the stack until a left parenthesis is found
+                //If the token is a right parenthesis, pop the stack until a left parenthesis is found
+                else if (token == Tokens.RIGHT_PAREN_OP) 
                 {
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
@@ -188,7 +191,7 @@ namespace SciCalc
                     operatorStack.Pop();
                 }
             }
-
+            //Enqueue any remaining tokens to the Output Queue
             while (operatorStack.Count != 0)
             {
                 outputQueue.Enqueue(operatorStack.Pop());
