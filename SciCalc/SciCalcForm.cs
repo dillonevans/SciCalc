@@ -9,7 +9,7 @@ namespace SciCalc
     {
         //Object & Variable Declarations
         private string displayString = "", infix;
-        private static Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
+        private readonly Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
 
         /// <summary>
         /// Constructor for SciCalcForm

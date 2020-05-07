@@ -46,10 +46,14 @@ namespace SciCalc
                         }
                         else
                         {
-                            //Pop the Stack Twice to Obtain the Operands and Apply the Operator
-                            l = valueStack.Pop();
-                            r = valueStack.Pop();
-                            valueStack.Push(EvaluateExpression(l, r, token));
+                            //Ensure that the stack has two variables to pop
+                            if (valueStack.Count >=2)
+                            {
+                                //Pop the Stack Twice to Obtain the Operands and Apply the Operator
+                                l = valueStack.Pop();
+                                r = valueStack.Pop();
+                                valueStack.Push(EvaluateExpression(l, r, token));
+                            }
                         }
                     }
                     //If the current token identifies a Function

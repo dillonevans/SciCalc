@@ -89,10 +89,9 @@ namespace SciCalc
         /// <returns> True if the token is numeric </returns>
         public static bool IsNumeric(string token)
         {
-          
             foreach (char parse in token)
             {
-                if (!Char.IsDigit(parse) && !(parse== DECIMAL_OP[0] || parse == NEGATIVE_TOKEN[0])) //Token is Negative or a Decimal
+                if (!Char.IsDigit(parse) && !(parse== DECIMAL_OP[0] || parse == NEGATIVE_TOKEN[0])) //Token is Non Negative or a Decimal
                 {
                     return false;
                 }
