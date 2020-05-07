@@ -195,7 +195,9 @@ namespace SciCalc
                 {
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
+
                         outputQueue.Enqueue(operatorStack.Pop());
+
                         if (operatorStack.Count == 0)
                         {
                             throw new Exception("Imbalanced Parenthetical");
