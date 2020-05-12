@@ -512,6 +512,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Desktop;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.modeToolStripMenuItem});
@@ -523,15 +524,19 @@
             // 
             // modeToolStripMenuItem
             // 
+            this.modeToolStripMenuItem.BackColor = System.Drawing.SystemColors.Desktop;
             this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.degreesToolStripMenuItem,
             this.radiansToolStripMenuItem});
+            this.modeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
             this.modeToolStripMenuItem.Text = "Mode";
             // 
             // degreesToolStripMenuItem
             // 
+            this.degreesToolStripMenuItem.BackColor = System.Drawing.SystemColors.Desktop;
+            this.degreesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.degreesToolStripMenuItem.Name = "degreesToolStripMenuItem";
             this.degreesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.degreesToolStripMenuItem.Text = "DEG";
@@ -539,6 +544,8 @@
             // 
             // radiansToolStripMenuItem
             // 
+            this.radiansToolStripMenuItem.BackColor = System.Drawing.SystemColors.Desktop;
+            this.radiansToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.radiansToolStripMenuItem.Name = "radiansToolStripMenuItem";
             this.radiansToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.radiansToolStripMenuItem.Text = "RAD";

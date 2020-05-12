@@ -112,9 +112,9 @@ namespace SciCalc
         /// <returns> The result of the function evaluation </returns>
         private double EvaluateFunction(string func, double val)
         {
-            //Perform Token Lookup and Return The Evaluation of the Associated Function for the given value
-            double modifier = currentMode == Mode.DEG ? (Math.PI / 180.0) : 1;
+            double modifier = (currentMode == Mode.DEG ? (Math.PI / 180.0) : 1);
             
+            //Perform Token Lookup and Return The Evaluation of the Associated Function for the given value
             switch (func)
             {
                 case Tokens.SIN:
@@ -172,16 +172,16 @@ namespace SciCalc
                 //If the token is e or Pi, enqueue the numeric value
                 if (Tokens.IsConstant(token))
                 {
-                    lastTokenIsOperator = false;
                     numCount++;
+                    lastTokenIsOperator = false;
                     outputQueue.Enqueue(EvaluateConstant(token).ToString());
                 }
 
                 //If the token is a number, enqueue it to the Output Queue
                 else if (Tokens.IsNumeric(token))
                 {
-                    lastTokenIsOperator = false;
                     numCount++;
+                    lastTokenIsOperator = false;
                     outputQueue.Enqueue(token);
                 }
 
@@ -219,8 +219,8 @@ namespace SciCalc
                     it's an exception to the token classification */
                     if (token != Tokens.FACT_OP)
                     {
-                        lastTokenIsOperator = true;
                         opCount++;
+                        lastTokenIsOperator = true;
                     }
                 }
 
@@ -258,7 +258,7 @@ namespace SciCalc
             Debug.WriteLine("Post Fix: {0}", postFixString);
 
             //In the case of 2+ or +2, throw an exception
-            if (opCount == numCount) { throw new Exception("Invalid Expression"); }
+            if (opCount >= numCount) { throw new Exception("Invalid Expression"); }
             return postFixString.ToString();
         }
        
@@ -335,13 +335,15 @@ namespace SciCalc
         public string GetComputationString(string expression)
         {
             string output;
+            double result;
             try
             {
-               return EvaluateExpression(expression).ToString();
+               result = EvaluateExpression(expression);
+               return (result > Math.Pow(2, 64) - 1) ? "OVERFLOW" : result.ToString();
             }
             catch (Exception e)
             {
-                output = "ERROR:" + e.Message;
+                output = "ERROR: " + e.Message;
             }
             return output;
         }  

@@ -8,9 +8,10 @@ namespace SciCalc
     public partial class SciCalcForm : Form
     {
         //Object & Variable Declarations
-        private string displayString = "", infix = "" ;
         private readonly Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
         private readonly Calculator calculator = new Calculator();
+        private string displayString = "", infix = "" ;
+        private int removeIndex = 1;
 
         /// <summary>
         /// Constructor for SciCalcForm
@@ -40,7 +41,7 @@ namespace SciCalc
                 if (Tokens.IsFunction(text)) //Encase whatever is on the display with the function
                 {
                     displayString = text + " (" + displayString + ")";
-                    infix = text + " ( " + infix + " ) ";
+                    infix = text.Contains(Tokens.LEFT_PAREN_OP) ? (text + " ( " + infix + " ) ") : (text + " ( " + infix + " )");
                     text = "";
                 }
             }
@@ -50,8 +51,8 @@ namespace SciCalc
             else if (text == Tokens.LEFT_PAREN_OP || Tokens.IsFunction(text)) { infix += text + " "; }
             else if (text == Tokens.RIGHT_PAREN_OP || text == Tokens.FACT_OP) { infix += " " + text; }
             else { infix += text; }
-           
-            displayString += text;
+
+            displayString = infix;
             DisplayBox.Text = displayString;
            
             Debug.WriteLine(infix);
@@ -80,6 +81,18 @@ namespace SciCalc
             if (buttonMap.ContainsKey(e.KeyChar.ToString()))
             {
                 buttonMap[e.KeyChar.ToString()].PerformClick();
+            }
+            else if (e.KeyChar == (char)ConsoleKey.Backspace)
+            {
+                if (displayString.Trim().Length > 1 && !Tokens.IsFunction(displayString.Trim()))
+                {
+                    infix = displayString = displayString.Trim().Substring(0, displayString.Trim().Length - removeIndex).Trim();
+                }
+                else
+                {
+                    infix = displayString = "";
+                }
+                DisplayBox.Text = displayString;
             }
         }
     
