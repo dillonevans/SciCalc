@@ -67,7 +67,7 @@ namespace SciCalc
             }
             else
             {
-                lastTokenIsOperator = Tokens.IsOperator(text) ? true : false;
+                lastTokenIsOperator = Tokens.IsOperator(text) && text != Tokens.FACT_OP ? true : false;
                 displayString += text;
                 DisplayBox.Text = displayString;
                 EqualsButton.Enabled = true;
@@ -140,7 +140,7 @@ namespace SciCalc
         private void EqualsButton_Click(object sender, EventArgs e)
         {
 
-            string result = Calculator.EvaluateExpression(infix.Trim()).ToString();
+            string result = Calculator.GetComputationString(infix.Trim());
             DisplayBox.Text = result;
             infix = result;
             displayString = result;

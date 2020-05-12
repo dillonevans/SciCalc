@@ -18,7 +18,7 @@ namespace SciCalc
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static double EvaluateExpression(string expression)
+        private static double EvaluateExpression(string expression)
         {
             expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
             double l, r; //The left and right operands of an expression
@@ -43,6 +43,7 @@ namespace SciCalc
                         {
                             //Calculates the Value of the Factorial of the Top of The Stack and Stores the Value
                             valueStack.Push(Factorial(valueStack.Pop()));
+                            Debug.WriteLine("Fact");
                         }
                         else
                         {
@@ -180,9 +181,8 @@ namespace SciCalc
                         while (Tokens.IsFunction(operatorStack.Peek()) || (OperatorPrecedence(token) < OperatorPrecedence(operatorStack.Peek()) || (OperatorPrecedence(token) == OperatorPrecedence(operatorStack.Peek()) && IsLeftAssociative(token)) && operatorStack.Peek() != (Tokens.LEFT_PAREN_OP)))
                         {
                             outputQueue.Enqueue(operatorStack.Pop());
-
                             if (operatorStack.Count == 0)
-                            {
+                            { 
                                 break;
                             }
                         }
@@ -201,7 +201,6 @@ namespace SciCalc
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
                         outputQueue.Enqueue(operatorStack.Pop());
-                        if (operatorStack.Count == 0) { throw new Exception("Imbalanced Parenthetical");} 
                     }
                     operatorStack.Pop();
                 }
@@ -312,5 +311,25 @@ namespace SciCalc
             }
             return n * Factorial(n - 1);
         }
+
+        /// <summary>
+        /// Returns a string containing the result of evaluation
+        /// </summary>
+        /// <param name="expression"> The expression to evaluate </param>
+        /// <returns> The result of computation if no errors arise </returns>
+        public static string GetComputationString(string expression)
+        {
+            string output;
+            try
+            {
+               return EvaluateExpression(expression).ToString();
+            }
+            catch (Exception e)
+            {
+                output = "ERROR: " + e.Message;
+            }
+            return output;
+        }
     }
+
 }
