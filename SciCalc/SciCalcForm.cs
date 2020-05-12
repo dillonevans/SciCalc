@@ -8,9 +8,9 @@ namespace SciCalc
     public partial class SciCalcForm : Form
     {
         //Object & Variable Declarations
-        private string displayString = "", infix;
-        private bool lastTokenIsOperator = false;
+        private string displayString = "", infix = "" ;
         private readonly Dictionary<string, Button> buttonMap = new Dictionary<string, Button>();
+        private readonly Calculator calculator = new Calculator();
 
         /// <summary>
         /// Constructor for SciCalcForm
@@ -28,7 +28,6 @@ namespace SciCalc
         private void ButtonHandler(object sender, EventArgs e)
         {
             Button currentButton = (Button)sender;
-            char token = currentButton.Text[0];
             string text = currentButton.Text;
             if (DisplayBox.Text == "ERROR")
             {
@@ -45,34 +44,17 @@ namespace SciCalc
                     text = "";
                 }
             }
-            if (Char.IsDigit(token) || token == '.' || token == 'π' || token == 'e')
-            {
-                infix += token; //Append number as usual
-            }
-            else if (text == Tokens.NEGATIVE_TOKEN)
-            {
-                infix += " " + text;
-            }
-            else
-            {
-                infix += " " + text + " ";
-            }
-
-            if (lastTokenIsOperator && Tokens.IsOperator(text))
-            {
-                displayString = "ERROR";
-                DisplayBox.Text = displayString;
-                infix = "";
-                EqualsButton.Enabled = false;
-            }
-            else
-            {
-                lastTokenIsOperator = Tokens.IsOperator(text) && text != Tokens.FACT_OP ? true : false;
-                displayString += text;
-                DisplayBox.Text = displayString;
-                EqualsButton.Enabled = true;
-                Debug.WriteLine(infix);
-            }
+            
+            //This block ensures proper infix formatting for parsing
+            if (Tokens.IsOperator(text) && text != Tokens.FACT_OP) { infix += " " + text + " "; }
+            else if (text == Tokens.LEFT_PAREN_OP || Tokens.IsFunction(text)) { infix += text + " "; }
+            else if (text == Tokens.RIGHT_PAREN_OP || text == Tokens.FACT_OP) { infix += " " + text; }
+            else { infix += text; }
+           
+            displayString += text;
+            DisplayBox.Text = displayString;
+           
+            Debug.WriteLine(infix);
 
         }
 
@@ -111,7 +93,6 @@ namespace SciCalc
         {
             string token;
             this.ActiveControl = EqualsButton;
-
             foreach (Button b in groupBox3.Controls)
             {
                 //The '*' key represents multiplication and the '-' key represents subtraction 
@@ -131,6 +112,18 @@ namespace SciCalc
             }
         }
 
+        private void degreesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            calculator.CurrentMode = Calculator.Mode.DEG;
+
+        }
+
+        private void radiansToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            calculator.CurrentMode = Calculator.Mode.RAD;
+        }
+
+
         /// <summary>
         /// Upon Clicking The Equals Button, Evaluate The Infix Expression and display the
         /// result to the user
@@ -140,7 +133,7 @@ namespace SciCalc
         private void EqualsButton_Click(object sender, EventArgs e)
         {
 
-            string result = Calculator.GetComputationString(infix.Trim());
+            string result = calculator.GetComputationString(infix.Trim());
             DisplayBox.Text = result;
             infix = result;
             displayString = result;

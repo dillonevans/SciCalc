@@ -12,18 +12,26 @@ namespace SciCalc
     /// </summary>
     class Calculator
     {
+        public enum Mode { DEG, RAD}
+        private Mode currentMode;
+
+        public Mode CurrentMode
+        {
+            set { currentMode = value; }
+        }
+
         /// <summary>
         /// Converts the given expression into Reverse-Polish Notation and Applies the Appropriate Operators or Functions
         /// to the current token
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        private static double EvaluateExpression(string expression)
+        private double EvaluateExpression(string expression)
         {
-            expression = ConvertToPostFix(CleanUpString(expression)); //Clean up the expression and parse it to post fix
-            double l, r; //The left and right operands of an expression
+            expression = ConvertToPostFix(expression); //Convert the expression to post fix
             Stack<double> valueStack = new Stack<double>();
             string[] tokens = expression.Trim().Split(' ');
+            double l, r; //The left and right operands of an expression
 
             //Read in each token of the given expression
             foreach (string token in tokens)
@@ -36,6 +44,7 @@ namespace SciCalc
                         //Push the Token Onto the Value Stack
                         valueStack.Push(Double.Parse(token));
                     }
+
                     //If the Current Token is an Operator
                     else if (Tokens.IsOperator(token))
                     {
@@ -43,7 +52,6 @@ namespace SciCalc
                         {
                             //Calculates the Value of the Factorial of the Top of The Stack and Stores the Value
                             valueStack.Push(Factorial(valueStack.Pop()));
-                            Debug.WriteLine("Fact");
                         }
                         else
                         {
@@ -57,6 +65,7 @@ namespace SciCalc
                             }
                         }
                     }
+
                     //If the current token identifies a Function
                     else if (Tokens.IsFunction(token))
                     {
@@ -101,17 +110,19 @@ namespace SciCalc
         /// <param name="func"> The function to evaluate </param>
         /// <param name="val"> The value to insert into the function </param>
         /// <returns> The result of the function evaluation </returns>
-        private static double EvaluateFunction(string func, double val)
+        private double EvaluateFunction(string func, double val)
         {
             //Perform Token Lookup and Return The Evaluation of the Associated Function for the given value
+            double modifier = currentMode == Mode.DEG ? (Math.PI / 180.0) : 1;
+            
             switch (func)
             {
                 case Tokens.SIN:
-                    return Math.Sin(val);
+                    return Math.Sin(val * modifier);
                 case Tokens.COS:
-                    return Math.Cos(val);
+                    return Math.Cos(val * modifier);
                 case Tokens.TAN:
-                    return Math.Tan(val);
+                    return Math.Tan(val * modifier);
                 case Tokens.SQRT:
                     return Math.Sqrt(val);
                 case Tokens.NATURAL_LOG:
@@ -147,33 +158,47 @@ namespace SciCalc
       /// </summary>
       /// <param name="expression"> The user input expression in infix</param>
       /// <returns> The given expression in RPN </returns>
-        private static string ConvertToPostFix(string expression)
+        private string ConvertToPostFix(string expression)
         {
             Queue<string> outputQueue = new Queue<string>();
             Stack<string> operatorStack = new Stack<string>();
             StringBuilder postFixString = new StringBuilder();
-
+            int opCount = 0, numCount = 0;
+            bool lastTokenIsOperator = false;
             string[] tokens = expression.Split(' ');
 
             foreach (string token in tokens)
             {
+                //If the token is e or Pi, enqueue the numeric value
                 if (Tokens.IsConstant(token))
                 {
+                    lastTokenIsOperator = false;
+                    numCount++;
                     outputQueue.Enqueue(EvaluateConstant(token).ToString());
                 }
+
                 //If the token is a number, enqueue it to the Output Queue
                 else if (Tokens.IsNumeric(token))
-                { 
+                {
+                    lastTokenIsOperator = false;
+                    numCount++;
                     outputQueue.Enqueue(token);
                 }
+
                 // If the token is a function push it onto the Operator Stack
                 else if (Tokens.IsFunction(token)) 
                 {
+                    lastTokenIsOperator = false;
                     operatorStack.Push(token);
                 }
+
                 //If the token is a operator push it onto the Operator Stack
                 else if (Tokens.IsOperator(token)) 
                 {
+                    //IE: 2++ is invalid
+                    if (lastTokenIsOperator) { throw new Exception("Invalid Expression"); }
+                    
+                    //If the Operator Stack isn't empty
                     if (operatorStack.Count != 0)
                     {
                         //While there are still left associative operators, a function, or an operator of higher precedence
@@ -189,15 +214,27 @@ namespace SciCalc
                     }
                     //Push the current token to the Operator Stack
                     operatorStack.Push(token); 
+            
+                    /*Other operators are evaluated in the form "a *|+|-|/ b" but because factorial is a special case 
+                    it's an exception to the token classification */
+                    if (token != Tokens.FACT_OP)
+                    {
+                        lastTokenIsOperator = true;
+                        opCount++;
+                    }
                 }
+
                 //If the token is a left parentheses, push it onto the Operator Stack
                 else if (token == Tokens.LEFT_PAREN_OP) 
                 {
+                    lastTokenIsOperator = false;
                     operatorStack.Push(token);
                 }
+
                 //If the Token is a right parenthesis, pop the stack until a left parenthesis is found
                 else if (token == Tokens.RIGHT_PAREN_OP) 
                 {
+                    lastTokenIsOperator = false;
                     while (operatorStack.Peek() != Tokens.LEFT_PAREN_OP)
                     {
                         outputQueue.Enqueue(operatorStack.Pop());
@@ -205,17 +242,23 @@ namespace SciCalc
                     operatorStack.Pop();
                 }
             }
+
             //Enqueue any remaining tokens to the Output Queue
             while (operatorStack.Count != 0)
             {
                 outputQueue.Enqueue(operatorStack.Pop());
             }
+
             //Append whatever is remaining in the output queue to the string
             foreach (string str in outputQueue)
             {
                 postFixString.Append(str + " ");
             }
+
             Debug.WriteLine("Post Fix: {0}", postFixString);
+
+            //In the case of 2+ or +2, throw an exception
+            if (opCount == numCount) { throw new Exception("Invalid Expression"); }
             return postFixString.ToString();
         }
        
@@ -243,34 +286,6 @@ namespace SciCalc
                 default:
                     return 0;
             }
-        }
-
-        /// <summary>
-        /// Removes any additional whitespace from the infix string for conversion to post fix
-        /// </summary>
-        /// <param name="expr"> The infix expression </param>
-        /// <returns></returns>
-        private static string CleanUpString(string expr)
-        {
-            StringBuilder editedString = new StringBuilder();
-
-            for (int i = 0; i < expr.Length - 1; i++)
-            {
-                if (expr[i] != ' ')
-                {
-                    editedString.Append(expr[i]);
-                }
-                else if (expr[i] == ' ' && expr[i + 1] != ' ')
-                {
-                    editedString.Append(expr[i]);
-                }
-            }
-            if (expr[expr.Length - 1] != ' ')
-            {
-                editedString.Append(expr[expr.Length - 1]);
-            }
-            Debug.WriteLine(editedString.ToString());
-            return editedString.ToString();
         }
 
         /// <summary>
@@ -317,7 +332,7 @@ namespace SciCalc
         /// </summary>
         /// <param name="expression"> The expression to evaluate </param>
         /// <returns> The result of computation if no errors arise </returns>
-        public static string GetComputationString(string expression)
+        public string GetComputationString(string expression)
         {
             string output;
             try
@@ -326,10 +341,9 @@ namespace SciCalc
             }
             catch (Exception e)
             {
-                output = "ERROR: " + e.Message;
+                output = "ERROR:" + e.Message;
             }
             return output;
-        }
+        }  
     }
-
 }

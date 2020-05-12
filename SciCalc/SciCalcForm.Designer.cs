@@ -61,7 +61,12 @@
             this.TwoButton = new System.Windows.Forms.Button();
             this.ZeroButton = new System.Windows.Forms.Button();
             this.DisplayBox = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.degreesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.radiansToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -219,7 +224,7 @@
             this.eButton.BackColor = System.Drawing.Color.Black;
             this.eButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eButton.ForeColor = System.Drawing.Color.Transparent;
-            this.eButton.Location = new System.Drawing.Point(632, 228);
+            this.eButton.Location = new System.Drawing.Point(533, 297);
             this.eButton.Name = "eButton";
             this.eButton.Size = new System.Drawing.Size(93, 63);
             this.eButton.TabIndex = 20;
@@ -232,7 +237,7 @@
             this.PiButton.BackColor = System.Drawing.Color.Black;
             this.PiButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PiButton.ForeColor = System.Drawing.Color.Transparent;
-            this.PiButton.Location = new System.Drawing.Point(236, 228);
+            this.PiButton.Location = new System.Drawing.Point(335, 297);
             this.PiButton.Name = "PiButton";
             this.PiButton.Size = new System.Drawing.Size(93, 63);
             this.PiButton.TabIndex = 19;
@@ -245,7 +250,7 @@
             this.RightParenButton.BackColor = System.Drawing.Color.Black;
             this.RightParenButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RightParenButton.ForeColor = System.Drawing.Color.Transparent;
-            this.RightParenButton.Location = new System.Drawing.Point(632, 297);
+            this.RightParenButton.Location = new System.Drawing.Point(236, 297);
             this.RightParenButton.Name = "RightParenButton";
             this.RightParenButton.Size = new System.Drawing.Size(93, 63);
             this.RightParenButton.TabIndex = 18;
@@ -258,7 +263,7 @@
             this.LeftParenButton.BackColor = System.Drawing.Color.Black;
             this.LeftParenButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LeftParenButton.ForeColor = System.Drawing.Color.Transparent;
-            this.LeftParenButton.Location = new System.Drawing.Point(236, 297);
+            this.LeftParenButton.Location = new System.Drawing.Point(137, 297);
             this.LeftParenButton.Name = "LeftParenButton";
             this.LeftParenButton.Size = new System.Drawing.Size(93, 63);
             this.LeftParenButton.TabIndex = 17;
@@ -271,7 +276,7 @@
             this.DecimalButton.BackColor = System.Drawing.Color.Black;
             this.DecimalButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DecimalButton.ForeColor = System.Drawing.Color.Transparent;
-            this.DecimalButton.Location = new System.Drawing.Point(335, 297);
+            this.DecimalButton.Location = new System.Drawing.Point(632, 297);
             this.DecimalButton.Name = "DecimalButton";
             this.DecimalButton.Size = new System.Drawing.Size(93, 63);
             this.DecimalButton.TabIndex = 16;
@@ -285,7 +290,7 @@
             this.ClearButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ClearButton.Font = new System.Drawing.Font("Cambria Math", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ClearButton.Location = new System.Drawing.Point(533, 297);
+            this.ClearButton.Location = new System.Drawing.Point(731, 297);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(93, 63);
             this.ClearButton.TabIndex = 15;
@@ -505,6 +510,40 @@
             this.DisplayBox.Text = "0";
             this.DisplayBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(974, 28);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // modeToolStripMenuItem
+            // 
+            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.degreesToolStripMenuItem,
+            this.radiansToolStripMenuItem});
+            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+            this.modeToolStripMenuItem.Text = "Mode";
+            // 
+            // degreesToolStripMenuItem
+            // 
+            this.degreesToolStripMenuItem.Name = "degreesToolStripMenuItem";
+            this.degreesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.degreesToolStripMenuItem.Text = "DEG";
+            this.degreesToolStripMenuItem.Click += new System.EventHandler(this.degreesToolStripMenuItem_Click);
+            // 
+            // radiansToolStripMenuItem
+            // 
+            this.radiansToolStripMenuItem.Name = "radiansToolStripMenuItem";
+            this.radiansToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.radiansToolStripMenuItem.Text = "RAD";
+            this.radiansToolStripMenuItem.Click += new System.EventHandler(this.radiansToolStripMenuItem_Click);
+            // 
             // SciCalcForm
             // 
             this.AcceptButton = this.EqualsButton;
@@ -515,15 +554,19 @@
             this.ClientSize = new System.Drawing.Size(974, 528);
             this.Controls.Add(this.DisplayBox);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.menuStrip1);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "SciCalcForm";
             this.Text = "SciCalc";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.groupBox3.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -562,6 +605,10 @@
         private System.Windows.Forms.Button FactorialButton;
         private System.Windows.Forms.Button ExponentButton;
         private System.Windows.Forms.Button LogButton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem degreesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem radiansToolStripMenuItem;
     }
 }
 
